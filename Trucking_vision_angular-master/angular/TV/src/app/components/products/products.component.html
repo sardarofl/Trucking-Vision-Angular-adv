@@ -1,0 +1,69 @@
+
+
+<br>
+<br>
+<div *ngIf="submitted" id="overlay_loading">
+
+<div id="gifspinner" class="preloader-wrapper big active">
+     <div class="spinner-layer spinner-blue">
+     <div class="circle-clipper left">
+       <div class="circle"></div>
+     </div><div class="gap-patch">
+       <div class="circle"></div>
+     </div><div class="circle-clipper right">
+       <div class="circle"></div>
+     </div>
+   </div>
+
+</div>
+</div>
+
+ <div >
+    <h3>
+       Edit Products for {{category_url}} Category
+    </h3>
+ </div>
+
+
+
+   <div class="row">
+
+     <form id = "formNewProduct" name ="formNewProduct" #productData = "ngForm" >
+      <input type = "text" name ="name" id="name" placeholder="Enter product name" ngModel><br>
+      <input type = "file" id="image" name="image" ngModel ><br><br>
+      <input type="button" class="btn  green darken-1" (click)="addProduct(); productData.reset()" value="Add Product">
+    </form>
+
+   </div>
+
+   <table class="responsive-table striped">
+          <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Delete</th>
+                <th>Edit Gallery</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of product">
+              <td>{{item.product_name}}</td>
+              <td><img src='http://localhost:3000/uploads/{{item.image_path}}' height='42' width='62'></td>
+              <td> <a (click)="deleteProduct(item.id,item.product_name)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
+              <td><a routerLink='products/{{item.id}}/{{item.product_name}}' class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>
+
+            </tr>
+          </tbody>
+  </table>
+<!--
+<select class="browser-default">
+  <option value="" disabled selected>Choose your Month</option>
+  <option *ngFor="let i of months">{{i}}</option>
+</select>
+
+
+<div>
+   <span *ngIf="isavailable; else condition1">Condition is valid.</span>
+   <ng-template #condition1>Condition is invalid</ng-template>
+</div>-->

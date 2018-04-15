@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="50.63.165.6" content="">
+    <meta name="author" content="">
+
+    <title>Vision Trucking - Categories</title>
+
+    <link type="text/css" rel="stylesheet" href="../materialize/css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+      <nav class="navbar indigo darken-4" role="navigation" style="margin-bottom: 0">
+
+              <a class="" style="font-size:1.9em; margin-left:20px;" href="index.html">Vision Trucking</a>
+
+          <!-- /.navbar-header -->
+
+            <!-- /.navbar-top-links -->
+
+
+          <!-- /.navbar-static-side -->
+      </nav>
+
+        <!-- Page Content -->
+        <div class="container" id="page-wrapper">
+            <div class="container-fluid">
+            </br>
+                <div class="row">
+                    <button id="back_to_categories" class="btn black" ><i class='material-icons'>arrow_back</i></button>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 id="category_identifier" class="page-header">Edit Product</h3>
+                    </div>
+						<!-- /.col-lg-12 -->
+<div id="overlay_loading">
+<img id="gifspinner" src="../img/Gear-3.1s-200px.gif" alt="spinner" height="15%" width="15%">
+</div>
+            <form method="POST"   enctype="multipart/form-data">
+            <input id="field_product" name="product" class="form-control" placeholder="Enter a new Product Name" required>
+           <input id="category_name" type="hidden" name="category" value="">
+           </br>
+
+           <div>
+             <input id="image_name" type="file" name="image" required>
+           </div>
+           </br>
+           <div>
+             <button class="btn  light-green darken-3" type="submit" name="upload">Add Product</button>
+           </div>
+
+           </form>
+         </br>
+           <table id="trucking_products" class="responsive-table  striped" style="width:100%">
+             <tr>
+             <th>Product Name</th>
+             <th>Image</th>
+             <th>Delete</th>
+             <th>Edit Gallery</th>
+             </tr>
+
+
+           </table>
+
+					</div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="../materialize/js/materialize.min.js"></script>
+
+
+
+</body>
+</html>
+
+
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script>
+$(document).ready(function(){
+
+  ///get url parameter
+  var getUrlParameter = function getUrlParameter(sParam) {
+      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+
+          if (sParameterName[0] === sParam) {
+              return sParameterName[1] === undefined ? true : sParameterName[1];
+          }
+      }
+  };
+
+  var category_selected = getUrlParameter('category');
+  document.getElementById("category_name").value = category_selected;
+  document.getElementById("category_identifier").innerHTML = "Edit Products for '"+category_selected+"' category";
+/////////////////set data to above fields////////////////////////////////////////////
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var myObj = JSON.parse(this.responseText);
+    for(var i=0;i<myObj.length;i++)
+    {
+      var table = document.getElementById("trucking_products");
+      var row = table.insertRow();
+      var thumbnail_path = "../uploads/"+myObj[i].image_path;
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+
+      // Add some text to the new cells:
+      cell1.innerHTML = myObj[i].product_name;
+    //  cell2.innerHTML = myObj[i].image;
+      cell2.innerHTML = "<img src='"+thumbnail_path+"' height='42' width='62'>";
+      cell3.innerHTML ="<a href='#'  class='waves-effect waves-light red darken-3 btn' id='delete_product' data-id="+myObj[i].id+" data-product="+encodeURIComponent(myObj[i].product_name.trim())+"><i class='material-icons'>delete</i></a>";
+      //cell4.innerHTML ="<a id='edit_gallery' href=''>Edit Gallery</a>";
+      cell4.innerHTML ="<a  class='waves-effect waves-light  indigo darken-4 b btn' id='edit_gallery' href='/gallery?id="+myObj[i].id+"&category="+category_selected+"'><i class='material-icons'>edit</i></a>";
+
+      //cell5.innerHTML ="<form method='post'><input name='del_value' value="+myObj[i].id+" class='form-control'><input class='deletetable' type='submit' value='Delete' class='btn btn-primary'></input></form>";
+    }
+
+  }
+};
+xmlhttp.open("GET", "/fetchs/fetch_products/"+category_selected, true);
+xmlhttp.send();
+
+//////////////////end setting data///////////////////////////
+});
+</script>
+
+
+
+  <script>
+  //POSTING
+  $(document).ready(function(){
+  //  var url="http://50.63.165.6:3000/"
+    $('form').on('submit', function(){
+    //  console.log("I clicked");
+
+        var prod_field = $('#field_product');
+        var img_field = $('#image_name');
+        var cat_field = $('#category_name');
+        var actual_file = $('#image_name').get(0).files;
+        var filename = img_field.val().replace(/^.*\\/, "");
+    //    console.log(actual_file);
+        var new_product = {data:[{item: prod_field.val()},{item: filename},{item: cat_field.val()}]};
+    //    console.log(new_product);
+		$('#overlay_loading').show();
+
+          var formData = new FormData(this);
+          $.ajax({
+            type:"POST",
+          url: '/adds/add_product',
+          data: formData,
+          processData:false,
+          contentType: false,
+          success: function(data){
+                alert("Product "+prod_field.val()+" Added.");
+              $('#overlay_loading').hide();
+                location.reload();
+          }
+        });
+        return false;
+
+    });
+
+});
+
+ $(document).on("click", "#delete_product", function(){
+   var url="http://50.63.165.6:3000/"
+  var id = $(this).attr("data-id");
+    var category = $(this).attr("data-product");
+//  console.log('you selected on '+id);
+  if (confirm("Are you sure you want to delete "+decodeURIComponent(category)+" product? All dependencies will be deleted!") == true) {
+  $('#overlay_loading').show();
+    $.ajax({
+      type: 'DELETE',
+      url: 'deletes/delete_product/' + id,
+      success: function(data){
+	  $('#overlay_loading').hide();
+        //do something with the data via front-end framework
+        location.reload();
+      }
+    });
+  } else{
+    //do nothing
+  }
+
+});
+
+
+$(document).on("click", "#back_to_categories", function(){
+  var url="/";
+  window.location.href = url;
+});
+
+  </script>
+</html>
+
+
+<style>
+table, th, td {
+
+}
+
+.custom_button {
+	-moz-box-shadow:inset 0px -3px 7px 0px #29bbff;
+	-webkit-box-shadow:inset 0px -3px 7px 0px #29bbff;
+	box-shadow:inset 0px -3px 7px 0px #29bbff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #2dabf9), color-stop(1, #0688fa));
+	background:-moz-linear-gradient(top, #2dabf9 5%, #0688fa 100%);
+	background:-webkit-linear-gradient(top, #2dabf9 5%, #0688fa 100%);
+	background:-o-linear-gradient(top, #2dabf9 5%, #0688fa 100%);
+	background:-ms-linear-gradient(top, #2dabf9 5%, #0688fa 100%);
+	background:linear-gradient(to bottom, #2dabf9 5%, #0688fa 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#2dabf9', endColorstr='#0688fa',GradientType=0);
+	background-color:#2dabf9;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #0b0e07;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	padding:9px 23px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #263666;
+}
+.custom_button:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #0688fa), color-stop(1, #2dabf9));
+	background:-moz-linear-gradient(top, #0688fa 5%, #2dabf9 100%);
+	background:-webkit-linear-gradient(top, #0688fa 5%, #2dabf9 100%);
+	background:-o-linear-gradient(top, #0688fa 5%, #2dabf9 100%);
+	background:-ms-linear-gradient(top, #0688fa 5%, #2dabf9 100%);
+	background:linear-gradient(to bottom, #0688fa 5%, #2dabf9 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0688fa', endColorstr='#2dabf9',GradientType=0);
+	background-color:#0688fa;
+}
+.custom_button:active {
+	position:relative;
+	top:1px;
+}
+#overlay_loading {
+display:none;
+position:fixed;
+z-index:5;
+ left:0;
+ top:0;
+margin:0px;
+width:100%; height:100%;
+background: rgba(54, 25, 25, .7);
+text-align: center;
+color:white;
+ }
+
+#gifspinner{
+  position:fixed;
+  width:150px;
+  height:150px;
+  top:50%;
+  display: inline-block;
+   vertical-align: middle;
+   line-height: normal;
+}
+
+
+
+
+
+</style>

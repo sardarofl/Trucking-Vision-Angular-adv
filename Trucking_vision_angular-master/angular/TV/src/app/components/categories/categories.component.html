@@ -1,0 +1,64 @@
+
+
+<br>
+<br>
+<div *ngIf="submitted" id="overlay_loading">
+
+<div id="gifspinner" class="preloader-wrapper big active">
+     <div class="spinner-layer spinner-blue">
+     <div class="circle-clipper left">
+       <div class="circle"></div>
+     </div><div class="gap-patch">
+       <div class="circle"></div>
+     </div><div class="circle-clipper right">
+       <div class="circle"></div>
+     </div>
+   </div>
+
+</div>
+</div>
+
+ <ul id="tabs-swipe-demo" class="tabs indigo darken-4 ">
+   <li class="tab col s3 "><a class="white-text" href="#test-swipe-1">Categories</a></li>
+   <li class="tab col s3"><a class="white-text" href="#test-swipe-2">Websites</a></li>
+ </ul>
+ <div id="test-swipe-1" class="col s12"><!--The content below is only a placeholder and can be replaced. -->
+ <div >
+    <h3>
+       Edit Categories
+    </h3>
+ </div>
+
+
+   <div class="row">
+
+     <form id = "formNewCategory" name ="formNewCategory" #categoryData = "ngForm" >
+      <input type = "text" name ="name" id="name" placeholder="Enter category name" ngModel><br>
+      <input type = "file" id="image" name="image" ngModel ><br><br>
+      <input type="button" class="btn  green darken-1" (click)="addCategory(); categoryData.reset()" value="Add Category">
+    </form>
+
+   </div>
+
+   <table class="responsive-table striped">
+          <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Image</th>
+                <th>Delete</th>
+                <th>Edit Products</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let item of category">
+              <td>{{item.category_name}}</td>
+              <td><img src='http://localhost:3000/uploads/{{item.image_path}}' height='42' width='62'></td>
+              <td> <a (click)="deleteCategory(item.id,item.category_name)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
+              <td><a routerLink='products/{{item.id}}/{{item.category_name}}' class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>
+
+            </tr>
+          </tbody>
+  </table>
+</div>
+ <div id="test-swipe-2" class="col s12 red">Websites</div>
