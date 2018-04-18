@@ -28,6 +28,12 @@ export class AdddataService {
       .catch(this._errorHandler);
     }
 
+    addGallery(formdata:any){
+       let _url:string = "http://localhost:3000/adds/add_gallery";
+       return this.http.post(_url,formdata)
+       .catch(this._errorHandler);
+     }
+
    _errorHandler(error: Response){
      console.error('Error occured: ' +error);
      return Observable.throw(error||'some error on server occured');

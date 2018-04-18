@@ -91,7 +91,7 @@ export class CategoriesComponent implements OnInit {
         let catname = catnames[0];
         formData.append('image',file,file.name);
         formData.append('category',catnames);
-        this.submitted=true;
+      //  this.submitted=true;
 
         this.adddataService.addCategory(formData).subscribe
         (res =>{ alert("category "+catnames+" is now added.");

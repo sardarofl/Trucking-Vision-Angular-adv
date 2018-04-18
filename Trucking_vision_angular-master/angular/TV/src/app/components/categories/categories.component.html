@@ -55,7 +55,7 @@
               <td>{{item.category_name}}</td>
               <td><img src='http://localhost:3000/uploads/{{item.image_path}}' height='42' width='62'></td>
               <td> <a (click)="deleteCategory(item.id,item.category_name)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
-              <td><a routerLink='products/{{item.id}}/{{item.category_name}}' class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>
+              <td><a routerLink='/products/{{item.id}}/{{item.category_name}}' routerLinkActive="active"class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>
 
             </tr>
           </tbody>

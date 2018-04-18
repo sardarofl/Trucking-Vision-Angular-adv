@@ -9,7 +9,6 @@ const Add = require('../models/add');
 
 //add category
 router.post('/add_category',function(req,res){
-	//console.log("add category called");
 	var req = req;
 	var res = res;
 	Add.AddToCategories(req, res, function(err,rows){
@@ -30,6 +29,7 @@ router.post('/add_product',function(req,res){
 
 //add multiple images for gallerys
 router.post('/add_gallery',function(req,res){
+		console.log(req);
 	var req = req;
 	var res = res;
 	Add.AddToGallery(req, res, function(err,rows){

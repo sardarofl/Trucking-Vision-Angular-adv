@@ -18,6 +18,7 @@ var storage =   multer.diskStorage({
 });
 
 var upload = multer({ storage : storage}).single('image');
+var multiple_upload = multer({ storage : storage}).array('image');
 
 //adding items
 
@@ -25,7 +26,7 @@ const Add_Items={
 
   AddToCategories:function(req, res, callback){
     upload(req,res,function(err) {
-      console.log(req);
+    //  console.log(req);
       var item = req.body.category;
       var file_path = req.file.originalname;
       var filename_path = req.file.filename;
@@ -44,7 +45,6 @@ const Add_Items={
   },
   AddToProducts:function(req, res, callback){
     upload(req,res,function(err) {
-      //console.log(req);
       var item = req.body.product;
       var cat = req.body.category;
       var file_path = req.file.originalname;
@@ -65,19 +65,28 @@ const Add_Items={
   },
   AddToGallery:function(req, res, callback){
 
-    upload(req,res,function(err) {
-      var id=req.body.item;
-      var org_name = req.file.originalname;
-      var file_name = req.file.filename;
+    multiple_upload(req,res,function(err) {
+      console.log(req);
+      var id=req.body.id;
+      var org_name=[];
+      var file_name=[];
 
-        config.query("INSERT INTO product_media (`id`,`href`, `src`,`type`,`title`,`description`) VALUES (?,?,?,?,?,?)", [id,org_name,file_name,'img','',''], function (err, result) {
-          if (err) throw err;
-        });
+      for(var i=0; i<req.files.length; i++)
+      {
+        org_name[i] = req.files[i].originalname;
+        file_name[i] = req.files[i].filename;
 
-        if(err) {
-              console.log(err);
-            return res.end("Error uploading file.");
-        }
+          config.query("INSERT INTO product_media (`id`,`href`, `src`,`type`,`title`,`description`) VALUES (?,?,?,?,?,?)", [id,org_name[i],file_name[i],'img','',''], function (err, result) {
+            if (err) throw err;
+          });
+
+          if(err) {
+                console.log(err);
+              return res.end("Error uploading file.");
+          }
+
+      }
+
         console.log('File uploaded');
         res.end("File is uploaded");
 
