@@ -17,4 +17,9 @@ export class DeletedataService {
     .map(res => res.json());
   }
 
+  deleteGalleryItem(id,name){
+    return this.http.delete("http://localhost:3000/deletes/delete_from_gallery/"+id)
+    .map(res => res.json());
+  }
+
 }

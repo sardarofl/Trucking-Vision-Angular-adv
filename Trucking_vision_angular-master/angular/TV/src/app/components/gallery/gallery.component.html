@@ -29,12 +29,10 @@
    <div class="row">
 
      <form id = "formNewGallery" name ="formNewGallery" #galleryData = "ngForm" >
-    <!--  <input type = "text" name ="name" id="name" placeholder="Enter product name" ngModel><br>-->
       <label class="custom-file-upload"> Select Files or Drag and Drop
       <input id="image" name="image" type="file" (change)="addGallery();galleryData.reset() " placeholder="Upload a file..." multiple ngModel/>
     </label>
     <br><br>
-      <!--<input type="button" class="btn  green darken-1" value="Add To Gallery">-->
     </form>
 
    </div>
@@ -42,31 +40,25 @@
    <table class="responsive-table striped">
           <thead>
             <tr>
-                <th>Product Name</th>
                 <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
                 <th>Delete</th>
-                <th>Edit Gallery</th>
+
             </tr>
           </thead>
 
           <tbody>
-            <tr *ngFor="let item of product">
-              <td>{{item.product_name}}</td>
-              <td><img src='http://localhost:3000/uploads/{{item.image_path}}' height='42' width='62'></td>
-              <td> <a (click)="deleteProduct(item.id,item.product_name)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
-              <td><a href='gallery/{{item.id}}/{{item.product_name}}' routerLinkActive="active" class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>
+            <tr *ngFor="let item of gallery">
+              <td><img src='http://localhost:3000/uploads/{{item.src}}' height='42' width='62'></td>
+              <td><input type = "text" name ="title_value" id="title_value" #Title_Value placeholder="Enter Title" value='{{item.title}}' (change)="SetGalleryDescription(item.src,Title_Value.value,Description_Value.value)" ></td>
+              <td><input type = "text" name ="description_value" id="description_value" #Description_Value placeholder="Enter Description" value='{{item.description}}' (change)="SetGalleryDescription(item.src,Title_Value.value,Description_Value.value)"></td>
+              <td> <a (click)="deleteGalleryItem(item.src)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
+            <!--  <td><a href='gallery/{{item.id}}/{{item.product_name}}' routerLinkActive="active" class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>-->
+
 
             </tr>
+              <div *ngIf="!submitted" class=" light-green btn-floating"><i  class="material-icons">check</i></div>
+              <div *ngIf="submitted" class="progress"><div class="indeterminate"></div></div>
           </tbody>
   </table>
-<!--
-<select class="browser-default">
-  <option value="" disabled selected>Choose your Month</option>
-  <option *ngFor="let i of months">{{i}}</option>
-</select>
-
-
-<div>
-   <span *ngIf="isavailable; else condition1">Condition is valid.</span>
-   <ng-template #condition1>Condition is invalid</ng-template>
-</div>-->

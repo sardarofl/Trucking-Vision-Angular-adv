@@ -2,7 +2,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 
 import {AdddataService} from '../../services/adddata.service';
-
+import {GetdataService} from '../../services/getdata.service';
+import {DeletedataService} from '../../services/deletedata.service';
+import {SetdataService} from '../../services/setdata.service';
 
 import {RouterModule,ActivatedRoute, Routes} from '@angular/router';
 
@@ -24,15 +26,71 @@ export class GalleryComponent implements OnInit {
   public product_url:string;
     public submitted:boolean;
 
-  constructor(private route: ActivatedRoute, private adddataService:AdddataService, private http:Http, private elem: ElementRef) { }
+  constructor(private getdataService:GetdataService, private deletedataService:DeletedataService, private setdataService:SetdataService,private route: ActivatedRoute, private adddataService:AdddataService, private http:Http, private elem: ElementRef) {
+    setInterval(() => {
+
+  }, 10000);
+  }
 
   ngOnInit() {
 
     this.id_url = this.route.snapshot.paramMap.get('id');
     this.product_url = this.route.snapshot.paramMap.get('product_name');
     console.log(this.product_url);
-this.submitted=false;
+    this.submitted=false;
+
+////////refresh gallery /////////////
+this.getdataService.getGallery(this.id_url).subscribe((gallery) => {
+  this.gallery=  gallery;
+},
+err=>{
+console.log(err);
+return false;
+});
+//////////end refresh gallery.////////
+
   }
+
+  deleteGalleryItem = function(deletedGalleryID) {
+
+         this.submitted=true;
+       this.deletedataService.deleteGalleryItem(deletedGalleryID).subscribe((res:Response)=>{
+        console.log(res);
+              this.submitted=false;
+              ////////refresh gallery /////////////
+              this.getdataService.getGallery(this.id_url).subscribe((gallery) => {
+                this.gallery=  gallery;
+                this.submitted=false;
+              },
+            err=>{
+              console.log(err);
+              return false;
+            });
+            //////////end refresh gallery.////////
+       });
+
+    }
+
+    SetGalleryDescription = function(SetGallery_ID,Title,Description) {
+
+           this.submitted=true;
+           //console.log(SetGallery_ID + Description);
+           this.setdataService.SetGalleryDescription(SetGallery_ID,Title,Description).subscribe((res:Response)=>{
+            console.log(res);
+
+                  this.submitted=false;
+                  ////////refresh gallery /////////////
+                  this.getdataService.getGallery(this.id_url).subscribe((gallery) => {
+                    this.gallery=  gallery;
+                    this.submitted=false;
+                  },
+                err=>{
+                  console.log(err);
+                  return false;
+                });
+                //////////end refresh gallery.////////
+           });
+      }
 
         public addGallery(): void{
 
@@ -57,7 +115,15 @@ this.submitted=false;
           this.adddataService.addGallery(formData).subscribe
           (res =>{ alert("Images uploaded to "+this.id_url+" is now added." );
           this.submitted=false;
-
+          ////////refresh gallery /////////////
+          this.getdataService.getGallery(this.id_url).subscribe((gallery) => {
+            this.gallery=  gallery;
+          },
+        err=>{
+          console.log(err);
+          return false;
+        });
+        //////////end refresh gallery.////////
 
         } );
 
@@ -68,7 +134,9 @@ this.submitted=false;
 
 interface Gallery{
   id:number,
-  product_name:string,
-  image:string,
-  image_path:string
+  href:string,
+  src:string,
+  type:string,
+  title:string,
+  description:string
 }

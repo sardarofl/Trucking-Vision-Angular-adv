@@ -3,6 +3,7 @@ import { Component,OnInit, ElementRef} from '@angular/core';
 import {GetdataService} from '../../services/getdata.service';
 import {DeletedataService} from '../../services/deletedata.service';
 import {AdddataService} from '../../services/adddata.service';
+import {SetdataService} from '../../services/setdata.service';
 
 
 import {RouterModule,ActivatedRoute, Routes} from '@angular/router';
@@ -26,7 +27,17 @@ export class ProductsComponent implements OnInit {
     deletedProdProduct:string;
   //  id_url:string;
 
-  constructor(private route: ActivatedRoute, private getdataService:GetdataService, private deletedataService:DeletedataService, private adddataService:AdddataService, private http:Http, private elem: ElementRef) { }
+  constructor(private route: ActivatedRoute, private getdataService:GetdataService, private setdataService:SetdataService, private deletedataService:DeletedataService, private adddataService:AdddataService, private http:Http, private elem: ElementRef) {
+    setInterval(() => {
+      this.getdataService.getProduct(this.category_url).subscribe((product) => {
+        this.product=  product;
+      },
+    err=>{
+      console.log(err);
+      return false;
+    });
+  }, 10000);
+}
 
   ngOnInit() {
 

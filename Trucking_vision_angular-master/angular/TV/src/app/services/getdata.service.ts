@@ -18,4 +18,8 @@ export class GetdataService {
       .map(res => res.json());
     }
 
+    getGallery(product_id:string){
+      return this.http.get('http://localhost:3000/fetchs/fetch_products_media/'+product_id)
+      .map(res => res.json());
+    }
 }

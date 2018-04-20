@@ -13,6 +13,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { GetdataService } from './services/getdata.service';
 import { DeletedataService } from './services/deletedata.service';
 import { AdddataService } from './services/adddata.service';
+import { SetdataService } from './services/setdata.service';
 
 import { MaterializeModule } from 'angular2-materialize';
 
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [GetdataService,DeletedataService,AdddataService],
+  providers: [GetdataService,DeletedataService,AdddataService,SetdataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
