@@ -15,6 +15,12 @@ const Fetch_Items={
   getAllProductMedia:function(callback){
   return config.query("SELECT * from product_media",callback);
   },
+  getAllProductMedia_Gallery:function(id,callback){
+  return config.query("SELECT * from product_media WHERE id=? and type='img'",[id],callback);
+  },
+  getAllProductMedia_Youtube:function(id,callback){
+  return config.query("SELECT * from product_media WHERE id=? and type='youtube'",[id],callback);
+  },
   getProductMediaByID:function(id,callback){
   return config.query("SELECT * from product_media WHERE id=?",[id],callback);
   }

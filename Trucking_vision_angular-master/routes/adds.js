@@ -29,7 +29,7 @@ router.post('/add_product',function(req,res){
 
 //add multiple images for gallerys
 router.post('/add_gallery',function(req,res){
-		console.log(req);
+		console.log("adding to gallery "+req);
 	var req = req;
 	var res = res;
 	Add.AddToGallery(req, res, function(err,rows){
@@ -40,7 +40,6 @@ router.post('/add_gallery',function(req,res){
 
 //add videos
 router.post('/add_video',function(req,res){
-
 	var req = req;
 	var res = res;
 	Add.AddVideoToGallery(req, res, function(err,rows){

@@ -94,10 +94,13 @@ const Add_Items={
 
   },
   AddVideoToGallery:function(req, res, callback){
-
+        multiple_upload(req,res,function(err) {
+    console.log("adding Video");
+    
     var id = req.body.id;
     var link = req.body.link;
     var desc = req.body.desc;
+    console.log(link);
     var data = {
     "Data":""
     };
@@ -109,6 +112,7 @@ const Add_Items={
      res.json(data);
    });
 
+       });
   }
 };
 

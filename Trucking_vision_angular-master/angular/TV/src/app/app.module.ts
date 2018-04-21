@@ -24,7 +24,7 @@ import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 const appRoutes: Routes = [
   {path:'', component: CategoriesComponent},
   {path:'products/:id/:category', component: ProductsComponent},
-  {path:'gallery/:id/:product_name', component: GalleryComponent},
+  {path:'gallery/:id/:product_name/:category', component: GalleryComponent},
   {path:'', redirectTo: '', pathMatch:'full'},
   {path:'**', component: CategoriesComponent}
 

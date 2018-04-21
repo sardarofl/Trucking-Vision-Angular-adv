@@ -1,10 +1,14 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
+declare var jquery:any;
+declare var $ :any;
 
 import {GetdataService} from '../../services/getdata.service';
 import {DeletedataService} from '../../services/deletedata.service';
 import {AdddataService} from '../../services/adddata.service';
 
 import {Http, Response, Headers} from '@angular/http';
+
+
 
 import 'rxjs/add/operator/map';
 
@@ -26,7 +30,8 @@ export class CategoriesComponent implements OnInit {
   categorydata:object;
   public submitted:false;
 
-  constructor(private getdataService:GetdataService, private deletedataService:DeletedataService, private adddataService:AdddataService, private http:Http, private elem: ElementRef) {
+
+  constructor(private getdataService:GetdataService,  private deletedataService:DeletedataService, private adddataService:AdddataService, private http:Http, private elem: ElementRef) {
     setInterval(() => {
       this.getdataService.getCategory().subscribe((category) => {
         this.category=  category;
@@ -43,6 +48,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function(){ $('ul.tabs').tabs(); });
 
       ////////refresh category /////////////
       this.getdataService.getCategory().subscribe((category) => {

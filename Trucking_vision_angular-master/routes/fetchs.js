@@ -36,14 +36,21 @@ router.get('/fetch_products_media',function(req,res){
     });
 });
 
-router.get('/fetch_products_media/:id',function(req,res){
+
+router.get('/fetch_products_media_byID_gallery/:id',function(req,res){
 	var id = req.params.id;
-	Fetch.getProductMediaByID(id,function(err,rows){
+	Fetch.getAllProductMedia_Gallery(id,function(err,rows){
 		if(err) return res.json(err);
 				 res.json(rows);
      });
 });
 
-
+router.get('/fetch_products_media_byID_youtube/:id',function(req,res){
+	var id = req.params.id;
+	Fetch.getAllProductMedia_Youtube(id,function(err,rows){
+		if(err) return res.json(err);
+				 res.json(rows);
+     });
+});
 
 module.exports = router;

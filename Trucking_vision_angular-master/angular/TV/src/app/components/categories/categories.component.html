@@ -1,7 +1,6 @@
 
 
 <br>
-<br>
 <div *ngIf="submitted" id="overlay_loading">
 
 <div id="gifspinner" class="preloader-wrapper big active">
@@ -18,17 +17,24 @@
 </div>
 </div>
 
- <ul id="tabs-swipe-demo" class="tabs indigo darken-4 ">
-   <li class="tab col s3 "><a class="white-text" href="#test-swipe-1">Categories</a></li>
-   <li class="tab col s3"><a class="white-text" href="#test-swipe-2">Websites</a></li>
- </ul>
- <div id="test-swipe-1" class="col s12"><!--The content below is only a placeholder and can be replaced. -->
- <div >
-    <h3>
-       Edit Categories
-    </h3>
- </div>
+<nav>
+    <div class="nav-wrapper  ">
+      <div class="col s12 indigo darken-4 ">
 
+        <a routerLink='/' fragment="categories" routerLinkActive="active" class="breadcrumb" >&nbsp;Categories</a>
+
+      </div>
+    </div>
+  </nav>
+  <br><br>
+
+ <ul id="tabs-swipe-demo" class="tabs indigo darken-4 ">
+   <li class="tab col s3 "><a class="white-text" href="#categories">Categories</a></li>
+   <li class="tab col s3"><a class="white-text" href="#websites">Websites</a></li>
+ </ul>
+ <div id="categories" class="col s12">
+
+<h5>Add new category</h5>
 
    <div class="row">
 
@@ -39,7 +45,6 @@
     </form>
 
    </div>
-
    <table class="responsive-table striped">
           <thead>
             <tr>
@@ -61,4 +66,4 @@
           </tbody>
   </table>
 </div>
- <div id="test-swipe-2" class="col s12 red">Websites</div>
+ <div id="websites" class="col s12 red">Websites</div>
