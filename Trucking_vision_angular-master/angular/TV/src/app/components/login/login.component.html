@@ -1,0 +1,64 @@
+<!--
+<body>
+  <div class="section"></div>
+  <main>
+    <div class="s12 m4 l8">
+      <div class="section"></div>
+
+      <h5 class="indigo-text">Please, login into your account</h5>
+      <div class="section"></div>
+
+        <div class="z-depth-1 grey lighten-4 row" style=" padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input #Login_Email_Value class='validate' type='email' name='email' id='email' />
+                <label for='email'>Enter your email</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input #Login_Password_Value class='validate' type='password' name='password' id='password' />
+                <label for='password'>Enter your password</label>
+              </div>
+
+            </div>
+
+            <br />
+            <div>
+              <div class='row'>
+
+                <a (click)="login(Login_Email_Value.value,Login_Password_Value.value)" class="col s12 btn btn-large waves-effect indigo">Login</a>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      <a href="#!">Create account</a>
+    </div>
+
+    <div class="section"></div>
+    <div class="section"></div>
+  </main>
+
+</body> -->
+
+<h2 class="page-header">Login</h2>
+<form (submit)="onLoginSubmit()">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" class="form-control" [(ngModel)]="username" name="username">
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" class="form-control" [(ngModel)]="password" name="password">
+  </div>
+  <input type="submit" class="btn btn-primary" value="Login">
+</form>

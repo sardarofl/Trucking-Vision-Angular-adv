@@ -53,6 +53,7 @@ export class CategoriesComponent implements OnInit {
       ////////refresh category /////////////
       this.getdataService.getCategory().subscribe((category) => {
         this.category=  category;
+        console.log(this.category);
       },
     err=>{
       console.log(err);
@@ -74,7 +75,7 @@ export class CategoriesComponent implements OnInit {
                  ////////refresh category /////////////
                  this.getdataService.getCategory().subscribe((category) => {
                    this.category=  category;
-                 //  console.log(  this.category);
+                 // console.log(  this.category);
                  },
                err=>{
                  console.log(err);
@@ -123,8 +124,8 @@ export class CategoriesComponent implements OnInit {
 }
 
 interface Category{
-  id:number,
-  category_name:string,
-  image:string,
-  image_path:string
+  _id:number,
+  item:string,
+  file_path:string,
+  filename_path:string
 }

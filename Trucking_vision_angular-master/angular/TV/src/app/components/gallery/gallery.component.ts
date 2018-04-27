@@ -127,6 +127,7 @@ return false;
           formData.append('link',youtube_link_parsed);
           formData.append('desc',youtube_description);
           formData.append('id',this.id_url);
+          formData.append('category',this.category_url );
 
           this.submitted=true;
           //var json_arr = JSON.stringify(formData);
@@ -198,6 +199,7 @@ return false;
         //  let catname = catnames[0];
           //formData.append('image',files);
           formData.append('id',this.id_url );
+          formData.append('category',this.category_url );
           this.submitted=true;
           var json_arr = JSON.stringify(formData);
         console.log("JSON: "+json_arr);
@@ -229,7 +231,8 @@ interface Gallery{
   src:string,
   type:string,
   title:string,
-  description:string
+  description:string,
+  category:string
 }
 
 interface Video{
@@ -238,5 +241,6 @@ interface Video{
   src:string,
   type:string,
   title:string,
-  description:string
+  description:string,
+  category:string
 }

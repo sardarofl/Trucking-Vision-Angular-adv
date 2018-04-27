@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
 const config = require('../config/database');
-
 const Add = require('../models/add');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 
 
@@ -11,10 +11,14 @@ const Add = require('../models/add');
 router.post('/add_category',function(req,res){
 	var req = req;
 	var res = res;
-	Add.AddToCategories(req, res, function(err,rows){
-		if(err) return res.json(err);
-				 res.json(rows);
-     });
+
+	  Add.AddToCategories(req,res, (err, category) =>{
+	    if(err){
+	     res.json({success:false, msg:'Failed to Add category'});
+	    }else{
+	     res.json({success:true, msg:'Category Added'});
+	    }
+	  });
 });
 
 /////////add product image and data
@@ -22,9 +26,12 @@ router.post('/add_product',function(req,res){
 	var req = req;
 	var res = res;
 	Add.AddToProducts(req, res, function(err,rows){
-		if(err) return res.json(err);
-				 res.json(rows);
-     });
+		if(err){
+		 res.json({success:false, msg:'Failed to Add Product'});
+		}else{
+		 res.json({success:true, msg:'Product Added'});
+		}
+    });
 });
 
 //add multiple images for gallerys
@@ -33,8 +40,11 @@ router.post('/add_gallery',function(req,res){
 	var req = req;
 	var res = res;
 	Add.AddToGallery(req, res, function(err,rows){
-		if(err) return res.json(err);
-				 res.json(rows);
+		if(err){
+		 res.json({success:false, msg:'Failed to Add Image'});
+		}else{
+		 res.json({success:true, msg:'Image Added'});
+		}
      });
 });
 
@@ -43,8 +53,11 @@ router.post('/add_video',function(req,res){
 	var req = req;
 	var res = res;
 	Add.AddVideoToGallery(req, res, function(err,rows){
-		if(err) return res.json(err);
-				 res.json(rows);
+		if(err){
+		 res.json({success:false, msg:'Failed to Add Image'});
+		}else{
+		 res.json({success:true, msg:'Image Added'});
+		}
 		 });
 });
 

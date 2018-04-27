@@ -1,6 +1,10 @@
 const config = require('../config/database');
-const mysql = require('mysql');
+//const mysql = require('mysql');
 var path = require('path');
+const mongoose = require('mongoose');
+const Category_schema = require('./category_schemas');
+const Product_schema = require('./product_schemas');
+const Gallery_schema = require('./gallery_schemas');
 
 //delete items
 
@@ -10,20 +14,15 @@ const Delete_Items={
   var data = {
     "Data":""
   };
-  config.query("DELETE FROM categories WHERE id = '"+item+"'", function (err, result) {
-   if (err) throw err;
+  console.log(item);
 
-  });
-  console.log(category);
-  config.query("DELETE FROM products WHERE categorie = '"+category+"'", function (err, result) {
-   if (err) throw err;
+  Category_schema.remove({_id:item},callback);
+  var productquery = Product_schema.find().remove({categorie:category});
+  productquery.exec();
+  console.log("product id: "+item);
+  var galleryquery = Gallery_schema.find().remove({category:category});
+  galleryquery.exec();
 
-  });
-
-  config.query("DELETE FROM product_media WHERE id = '"+item+"'", function (err, result) {
-   if (err) throw err;
-   res.json(data);
-  });
   },
 
   DeleteFromProducts:function(item, res, callback){
@@ -31,24 +30,19 @@ const Delete_Items={
     var data = {
       "Data":""
     };
-    config.query("DELETE FROM products WHERE id = '"+item+"'", function (err, result) {
-     if (err) throw err;
+    console.log(item);
+    Product_schema.remove({_id:item},callback);
+    var galleryquery = Gallery_schema.find().remove({id:item});
+    galleryquery.exec();
 
-    });
-
-    config.query("DELETE FROM product_media WHERE id = '"+item+"'", function (err, result) {
-     if (err) throw err;
-     res.json(data);
-    });
   },
   DeleteFromGallery:function(item, res, callback){
     var data = {
       "Data":""
     };
-    config.query("DELETE FROM product_media WHERE src = '"+item+"'", function (err, result) {
-     if (err) throw err;
-     res.json(data);
-    });
+    Gallery_schema.remove({src:item},callback);
+
+
   },
 
 };

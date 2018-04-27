@@ -76,7 +76,6 @@
               <td><input type = "text" name ="title_value" id="title_value" #Title_Value placeholder="Enter Title" value='{{item.title}}' (change)="SetGalleryDescription(item.src,Title_Value.value,Description_Value.value)" ></td>
               <td><input type = "text" name ="description_value" id="description_value" #Description_Value placeholder="Enter Description" value='{{item.description}}' (change)="SetGalleryDescription(item.src,Title_Value.value,Description_Value.value)"></td>
               <td> <a (click)="deleteGalleryItem(item.src)" class="waves-effect waves-light red darken-3 btn"><i  class="material-icons">delete</i></a></td>
-            <!--  <td><a href='gallery/{{item.id}}/{{item.product_name}}' routerLinkActive="active" class="waves-effect waves-light indigo darken-4 btn"><i class="material-icons">edit</i></a></td>-->
 
 
             </tr>

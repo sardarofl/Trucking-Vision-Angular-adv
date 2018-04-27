@@ -22,6 +22,7 @@ import { FileUploader } from 'ng2-file-upload';
 export class ProductsComponent implements OnInit {
     public product:Product[];
     public category_url:string;
+    //public id_url:string;
     public submitted:false;
     deletedProdID:string;
     deletedProdProduct:string;
@@ -44,7 +45,7 @@ export class ProductsComponent implements OnInit {
     //get parameters
   //  console.log("hey this is me yo"+this.route.snapshot.paramMap.get('category'));
     this.category_url = this.route.snapshot.paramMap.get('category');
-  //  this.id_url = = this.route.snapshot.paramMap.get('id');
+  //  this.id_url =  this.route.snapshot.paramMap.get('id');
     ////////refresh category /////////////
     this.getdataService.getProduct(this.category_url).subscribe((product) => {
       this.product=  product;
@@ -109,7 +110,7 @@ export class ProductsComponent implements OnInit {
 }
 
 interface Product{
-  id:number,
+  _id:number,
   product_name:string,
   image:string,
   image_path:string

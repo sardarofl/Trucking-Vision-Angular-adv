@@ -9,25 +9,27 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ProductsComponent } from './components/products/products.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { GetdataService } from './services/getdata.service';
 import { DeletedataService } from './services/deletedata.service';
 import { AdddataService } from './services/adddata.service';
 import { SetdataService } from './services/setdata.service';
+import { AuthenticationService } from './services/authentication.service';
 
 import { MaterializeModule } from 'angular2-materialize';
 
 import { FormsModule } from '@angular/forms';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
+import {AuthGuard} from './components/guards/auth.guard';
 
 const appRoutes: Routes = [
-  {path:'', component: CategoriesComponent},
-  {path:'products/:id/:category', component: ProductsComponent},
-  {path:'gallery/:id/:product_name/:category', component: GalleryComponent},
-  {path:'', redirectTo: '', pathMatch:'full'},
-  {path:'**', component: CategoriesComponent}
-
+    {path:'', component: CategoriesComponent, canActivate:[AuthGuard]},
+  {path:'category', component: CategoriesComponent, canActivate:[AuthGuard]},
+  {path:'products/:id/:category', component: ProductsComponent, canActivate:[AuthGuard]},
+  {path:'gallery/:id/:product_name/:category', component: GalleryComponent, canActivate:[AuthGuard]},
+  {path:'login', component: LoginComponent}
 ]
 
 @NgModule({
@@ -38,7 +40,8 @@ const appRoutes: Routes = [
     FileSelectDirective,
     ProductsComponent,
     FooterComponent,
-    GalleryComponent
+    GalleryComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [GetdataService,DeletedataService,AdddataService,SetdataService],
+  providers: [GetdataService,DeletedataService,AdddataService,SetdataService,AuthenticationService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

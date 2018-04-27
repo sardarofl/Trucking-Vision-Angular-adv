@@ -3,7 +3,7 @@
     <div class="nav-wrapper indigo darken-4">
       <a href="#" class="brand-logo">&nbsp;Vision Trucking Signage Panel</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Logout</a></li>
+        <li *ngIf="authService.loggedIn()"><a (click)="onLogoutClick()" href="#">Logout</a></li>
       </ul>
     </div>
 
